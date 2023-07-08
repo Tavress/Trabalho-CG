@@ -54,25 +54,13 @@ export default class Mesh {
     this.heds.build(coords, indices);
   }
 
-  //tentativa ruim
+  //Carregar OBJ
   async loadMeshV5(path){
     const response = await fetch(path);
     const text = await response.text();
 
-    //const txtList = text.split(/\s+/)
-    //const data = txtList.map(d => +d);
-
     const coords = [];
     const indices = [];
-
-    //for (let did = 2; did < data.length; did++) {
-    //  if (did < 4 * nv + 2) {
-    //    coords.push(data[did]);
-    //  }
-    //  else {
-    //    indices.push(data[did]);
-    //  }
-    //}
 
     const lines = text.split('\n');
     for (const line of lines) {

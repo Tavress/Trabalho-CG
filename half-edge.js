@@ -1,5 +1,5 @@
 export class Vertex {
-  constructor(vid, x, y, z, color = [0.5, 0.2, 0.4, 1.0]) {
+  constructor(vid, x, y, z, color = [1.0, 1.0, 1.0, 1.0]) {
     this.vid = vid;
 
     this.position = [x, y, z, 1];

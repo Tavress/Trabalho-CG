@@ -37,5 +37,6 @@ export default class Light {
 
   updateLight() {
     // TODO: Change light position
+    //mat4.translate(this.pos, )
   }
 }
