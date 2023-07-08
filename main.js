@@ -13,13 +13,16 @@ class Scene {
     // Mesh
     this.mesh = new Mesh( 1.0);
     this.copy = new Mesh(-1.0);
+
   }
 
   async init(gl) {
     await this.mesh.loadMeshV4();
     this.mesh.init(gl, this.light);
 
-    await this.copy.loadMeshV4()
+    //this.armadillo = await fetch
+
+    await this.copy.loadMeshV5()
     this.copy.init(gl, this.light);
   }
 
@@ -31,6 +34,8 @@ class Scene {
     this.copy.draw(gl, this.cam, this.light);
   }
 }
+
+
 
 class Main {
   constructor() {

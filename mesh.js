@@ -54,6 +54,45 @@ export default class Mesh {
     this.heds.build(coords, indices);
   }
 
+  //tentativa ruim
+  async loadMeshV5(){
+    const response = await fetch('src/bunny.obj');
+    const text = await response.text();
+
+    //const txtList = text.split(/\s+/)
+    //const data = txtList.map(d => +d);
+
+    const coords = [];
+    const indices = [];
+
+    //for (let did = 2; did < data.length; did++) {
+    //  if (did < 4 * nv + 2) {
+    //    coords.push(data[did]);
+    //  }
+    //  else {
+    //    indices.push(data[did]);
+    //  }
+    //}
+
+    const lines = text.split('\n');
+    for (const line of lines) {
+      const parts = line.trim().split(' ');
+      if (parts[0] === 'v') {
+        const x = parseFloat(parts[1]);
+        const y = parseFloat(parts[2]);
+        const z = parseFloat(parts[3]);
+        coords.push(x, y, z);
+      } else if (parts[0] === 'f') {
+        const a = parseInt(parts[1]) - 1; //esse -1 eh possivelmente sus
+        const b = parseInt(parts[2]) - 1;
+        const c = parseInt(parts[3]) - 1;
+        indices.push(a, b, c);
+      }
+    }
+    console.log(coords, indices);
+    this.heds.build(coords, indices);
+  }
+
   createShader(gl) {
     this.vertShd = Shader.createShader(gl, gl.VERTEX_SHADER, vertShaderSrc);
     this.fragShd = Shader.createShader(gl, gl.FRAGMENT_SHADER, fragShaderSrc);
