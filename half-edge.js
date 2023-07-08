@@ -71,7 +71,7 @@ export class HalfEdgeDS {
 
       this.halfEdges.push(he0, he1, he2);
     }
-
+    console.log("Vamos computar opposites")
     this.computeOpposites();
     this.computeVertexHe();
 
@@ -82,7 +82,9 @@ export class HalfEdgeDS {
 
   computeOpposites() {
     const visited = {};
+    //console.log(this.halfEdges.length);
 
+    //console.log(this.halfEdges[0].vertex.vid);
     for (let hid = 0; hid < this.halfEdges.length; hid ++) {
       const a = this.halfEdges[hid].vertex.vid;
       const b = this.halfEdges[hid].next.vertex.vid;

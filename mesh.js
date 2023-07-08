@@ -55,8 +55,8 @@ export default class Mesh {
   }
 
   //tentativa ruim
-  async loadMeshV5(){
-    const response = await fetch('src/bunny.obj');
+  async loadMeshV5(path){
+    const response = await fetch(path);
     const text = await response.text();
 
     //const txtList = text.split(/\s+/)
@@ -81,9 +81,9 @@ export default class Mesh {
         const x = parseFloat(parts[1]);
         const y = parseFloat(parts[2]);
         const z = parseFloat(parts[3]);
-        coords.push(x, y, z);
+        coords.push(x, y, z, 1.0);
       } else if (parts[0] === 'f') {
-        const a = parseInt(parts[1]) - 1; //esse -1 eh possivelmente sus
+        const a = parseInt(parts[1]) - 1;
         const b = parseInt(parts[2]) - 1;
         const c = parseInt(parts[3]) - 1;
         indices.push(a, b, c);
@@ -153,7 +153,7 @@ export default class Mesh {
     mat4.translate(this.model, this.model, [-0.25, -0.25, -0.25]);
     // [1 0 0 -0.5, 0 1 0 -0.5, 0 0 1 -0.5, 0 0 0 1] * this.mat 
 
-    mat4.scale(this.model, this.model, [5, 5, 5]);
+    mat4.scale(this.model, this.model, [0.3, 0.3, 0.3]);
     // [5 0 0 0, 0 5 0 0, 0 0 5 0, 0 0 0 1] * this.mat 
   }
 

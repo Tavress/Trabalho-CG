@@ -17,12 +17,12 @@ class Scene {
   }
 
   async init(gl) {
-    await this.mesh.loadMeshV4();
+    await this.mesh.loadMeshV5('src/bunny.obj');
     this.mesh.init(gl, this.light);
 
     //this.armadillo = await fetch
 
-    await this.copy.loadMeshV5()
+    await this.copy.loadMeshV5('src/armadillo.obj')
     this.copy.init(gl, this.light);
   }
 
