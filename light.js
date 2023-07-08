@@ -6,10 +6,10 @@ export default class Light {
     this.amb_k = 0.2;
 
     this.dif_c = vec4.fromValues(1.0, 1.0, 1.0, 1.0);
-    this.dif_k = 0.6;
+    this.dif_k = 0.5;
 
     this.esp_c = vec4.fromValues(1.0, 1.0, 1.0, 1.0);
-    this.esp_k = 0.3;
+    this.esp_k = 0.4;
     this.esp_p = 5.0;
   }
 

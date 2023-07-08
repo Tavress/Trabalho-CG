@@ -40,7 +40,9 @@ class Main {
     this.setViewport();
 
     this.scene = new Scene(this.gl);
-    this.scene.init(this.gl);
+    this.scene.init(this.gl).then(() => {
+      this.draw();
+    });
   }
 
   setViewport() {
@@ -55,10 +57,7 @@ class Main {
     this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-    // só desenha se as malhas estiverem carregadas
-    if (this.scene.mesh.isReady() && this.scene.copy.isReady() ) {
-      this.scene.draw(this.gl);
-    }
+    this.scene.draw(this.gl);
 
     requestAnimationFrame(this.draw.bind(this));
   }

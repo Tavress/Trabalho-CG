@@ -1,11 +1,11 @@
 export class Vertex {
-  constructor(vid, x, y, z) {
+  constructor(vid, x, y, z, color = [0.5, 0.2, 0.4, 1.0]) {
     this.vid = vid;
 
     this.position = [x, y, z, 1];
     this.normal = [0.0, 0.0, 0.0, 0.0];
 
-    this.scalar = 0.0;
+    this.color = color;
 
     this.he = null;
   }
@@ -33,12 +33,6 @@ export class HalfEdgeDS {
     this.vertices = [];
     this.halfEdges = [];
     this.faces = [];
-  }
-
-  isReady() {
-    return this.vertices.length > 0  && 
-           this.halfEdges.length > 0 &&
-           this.faces.length > 0;
   }
 
   build(coords, trigs) {
@@ -150,7 +144,7 @@ export class HalfEdgeDS {
 
   getVBOs() {
     const coords  = [];
-    const scalars = [];
+    const colors  = [];
     const normals = [];
     const indices = [];
 
@@ -158,7 +152,7 @@ export class HalfEdgeDS {
       const v = this.vertices[vId];
 
       coords.push(...v.position);
-      scalars.push(vId / this.vertices.length);
+      colors.push(...v.color);
       normals.push(...v.normal);
     }
 
@@ -166,7 +160,7 @@ export class HalfEdgeDS {
       indices.push(this.halfEdges[hid].vertex.vid);
     }
 
-    return [coords, scalars, normals, indices];
+    return [coords, colors, normals, indices];
   }
 
   estrela(v) {

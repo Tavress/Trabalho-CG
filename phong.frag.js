@@ -53,5 +53,5 @@ void main()
   float fatorEsp = pow(max(0.0, dot(halfVec, viewNormal)), light_esp_p);
 
   // cor final do vértice
-  minhaColor = 0.45 * fColor + 0.55 * (light_amb_k * light_amb_c + fatorDif * light_dif_k * light_dif_c + fatorEsp * light_esp_k * light_esp_c);
+  minhaColor = 0.25 * fColor + 0.75 * (light_amb_k * light_amb_c + fatorDif * light_dif_k * light_dif_c + fatorEsp * light_esp_k * light_esp_c);
 }`
