@@ -31,9 +31,11 @@ export default class Camera {
   }
 
   updateViewMatrix() {
+    //Tentando fazer a camera virar aqui
+    this.angle += 0.005;
     mat4.identity( this.view );
+    mat4.rotateY(this.view, this.angle);
     mat4.lookAt(this.view, this.eye, this.at, this.up);
-    // TODO: Tentar implementar as contas diretamente
   }
 
   updateProjectionMatrix(type = '') {

@@ -131,7 +131,7 @@ export default class Mesh {
     mat4.translate(this.model, this.model, [this.delta, 0, 0]);
     // [1 0 0 delta, 0 1 0 0, 0 0 1 0, 0 0 0 1] * this.mat 
 
-    mat4.rotateY(this.model, this.model, this.angle);
+    //mat4.rotateY(this.model, this.model, this.angle);
     // [ cos(this.angle) 0 -sin(this.angle) 0, 
     //         0         1        0         0, 
     //   sin(this.angle) 0  cos(this.angle) 0, 
