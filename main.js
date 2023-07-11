@@ -14,19 +14,22 @@ class Scene {
     this.mesh = new Mesh( 1.0);
     this.copy = new Mesh(-1.0);
 
+    this.rotationAngle = 0.0;
+    this.rotationSpeed = 0.005;
+
   }
 
   async init(gl) {
     await this.mesh.loadMeshV5('src/bunny.obj');
     this.mesh.init(gl, this.light);
 
-    //this.armadillo = await fetch
 
     await this.copy.loadMeshV5('src/armadillo.obj')
     this.copy.init(gl, this.light);
   }
 
   draw(gl) {  
+    this.rotationAngle += this.rotationSpeed;
     this.cam.updateCam();
     this.light.updateLight();
 
