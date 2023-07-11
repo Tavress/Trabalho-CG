@@ -55,7 +55,7 @@ export default class Mesh {
   }
 
   //Carregar OBJ
-  async loadMeshV5(path){
+  async loadMeshV5(path) {
     const response = await fetch(path);
     const text = await response.text();
 
@@ -109,12 +109,12 @@ export default class Mesh {
     const normalsBuffer = Shader.createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(vbos[2]));
 
     this.vaoLoc = Shader.createVAO(gl,
-      coordsAttributeLocation, coordsBuffer, 
-      colorsAttributeLocation, colorsBuffer, 
+      coordsAttributeLocation, coordsBuffer,
+      colorsAttributeLocation, colorsBuffer,
       normalsAttributeLocation, normalsBuffer);
 
     this.indicesLoc = Shader.createBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(vbos[3]));
-  }  
+  }
 
   init(gl, light) {
     this.createShader(gl);
@@ -127,7 +127,7 @@ export default class Mesh {
   updateModelMatrix() {
     this.angle += 0.005;
 
-    mat4.identity( this.model );
+    mat4.identity(this.model);
     mat4.translate(this.model, this.model, [this.delta, 0, 0]);
     // [1 0 0 delta, 0 1 0 0, 0 0 1 0, 0 0 0 1] * this.mat 
 
@@ -161,7 +161,7 @@ export default class Mesh {
     const model = this.model;
     const view = cam.getView();
     const proj = cam.getProj();
-    
+
     gl.uniformMatrix4fv(this.uModelLoc, false, model);
     gl.uniformMatrix4fv(this.uViewLoc, false, view);
     gl.uniformMatrix4fv(this.uProjectionLoc, false, proj);
