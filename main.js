@@ -11,12 +11,8 @@ class Scene {
     this.light = new Light();
 
     // Mesh
-    this.mesh = new Mesh( 1.0);
+    this.mesh = new Mesh(1.0);
     this.copy = new Mesh(-1.0);
-
-    this.rotationAngle = 0.0;
-    this.rotationSpeed = 0.005;
-
   }
 
   async init(gl) {
@@ -28,8 +24,7 @@ class Scene {
     this.copy.init(gl, this.light);
   }
 
-  draw(gl) {  
-    this.rotationAngle += this.rotationSpeed;
+  draw(gl) {
     this.cam.updateCam();
     this.light.updateLight();
 

@@ -27,7 +27,6 @@ export default class Mesh {
     this.uModelLoc = -1;
     this.uViewLoc = -1;
     this.uProjectionLoc = -1;
-    this.uRotationMat = -1;
   }
 
   async loadMeshV4() {
@@ -95,7 +94,6 @@ export default class Mesh {
     this.uModelLoc = gl.getUniformLocation(this.program, "u_model");
     this.uViewLoc = gl.getUniformLocation(this.program, "u_view");
     this.uProjectionLoc = gl.getUniformLocation(this.program, "u_projection");
-    this.uRotationMat = gl.getUniformLocation(this.program, "u_rotation");
   }
 
   createVAO(gl) {
@@ -167,14 +165,9 @@ export default class Mesh {
 
     gl.uniformMatrix4fv(this.uModelLoc, false, model);
     gl.uniformMatrix4fv(this.uViewLoc, false, view);
-
-    this.angle += 0.005;
-    mat4.fromYRotation(this.rotationMatrix, this.angle);
-    gl.uniformMatrix4fv(this.uRotationMat, false, this.rotationMatrix);
-
     gl.uniformMatrix4fv(this.uProjectionLoc, false, proj);
 
-    
+
 
     gl.bindVertexArray(this.vaoLoc);
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indicesLoc);
