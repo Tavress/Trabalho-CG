@@ -167,12 +167,14 @@ export default class Mesh {
     
     gl.uniformMatrix4fv(this.uModelLoc, false, model);
     gl.uniformMatrix4fv(this.uViewLoc, false, view);
-    gl.uniformMatrix4fv(this.uProjectionLoc, false, proj);
-
 
     this.angle += 0.005;
     mat4.fromYRotation(this.rotationMatrix, this.angle);
     gl.uniformMatrix4fv(this.uRotationMat, false, this.rotationMatrix);
+
+    gl.uniformMatrix4fv(this.uProjectionLoc, false, proj);
+
+    
 
     gl.bindVertexArray(this.vaoLoc);
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indicesLoc);

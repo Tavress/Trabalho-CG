@@ -19,7 +19,7 @@ void main() {
   mat4 modelView = u_view * u_model;
 
   // posição final do vertice
-  gl_Position  = u_projection * modelView * position * u_rotation;
+  gl_Position  = u_projection * modelView * u_rotation * position;
   gl_Position /= gl_Position.w;
 
   fPosition = position;
