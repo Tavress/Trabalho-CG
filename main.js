@@ -11,8 +11,8 @@ class Scene {
     this.light = new Light();
 
     // Mesh
-    this.mesh = new Mesh(1.0, [0,0,1], [0.1, 0.1, 0.1]);
-    this.copy = new Mesh(0.0, [0,1,0], [0.3, 0.3, 0.3]);
+    this.mesh = new Mesh(1.0, [0, 0, 1], [0.1, 0.1, 0.1]);
+    this.copy = new Mesh(0.0, [0, 1, 0], [0.3, 0.3, 0.3]);
   }
 
   async init(gl) {
@@ -36,8 +36,14 @@ class Scene {
 
 
 class Main {
+
   constructor() {
     const canvas = document.querySelector("#glcanvas");
+    const submitButton = document.getElementById("submit");
+
+    submitButton.onclick = () => {
+      console.log(this.getSelectedMesh(), this.getSelectedVertex());
+    }
 
     this.gl = canvas.getContext("webgl2");
     this.setViewport();
@@ -46,6 +52,19 @@ class Main {
     this.scene.init(this.gl).then(() => {
       this.draw();
     });
+  }
+
+  getSelectedMesh() {
+    var ele = document.getElementsByName('mesh');
+
+    for (var i = 0; i < ele.length; i++) {
+      if (ele[i].checked) return ele[i].value;
+    }
+  }
+
+  getSelectedVertex() {
+    const vertex = document.getElementById("vertex");
+    return vertex.value;
   }
 
   setViewport() {
