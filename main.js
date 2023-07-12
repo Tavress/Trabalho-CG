@@ -50,7 +50,7 @@ class Main {
 
     const submitButton = document.getElementById("submit");
     submitButton.onclick = () => {
-      var selectedIndex = this.getSelectedVertex();
+      var selectedIndex = Number(this.getSelectedVertex());
       this.getSelectedMesh().createSelectedVAO(this.gl, selectedIndex);
       console.log(this.getSelectedMesh(), this.getSelectedVertex());
     }

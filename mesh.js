@@ -137,7 +137,7 @@ export default class Mesh {
     const coordsBuffer = Shader.createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(vbos[0]));
 
     var colorsAttributeLocation = gl.getAttribLocation(this.program, "color");
-    const colorsBuffer = Shader.createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(vbos[1]));
+    const colorsBuffer = Shader.createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array([[1.0, 0.0, 0.0, 0.0]])); // Hardcoded
 
     var normalsAttributeLocation = gl.getAttribLocation(this.program, "normal");
     const normalsBuffer = Shader.createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(vbos[2]));
@@ -210,10 +210,11 @@ export default class Mesh {
     gl.drawElements(gl.TRIANGLES, this.heds.faces.length * 3, gl.UNSIGNED_INT, 0);
 
     if (this.selectedVaoLoc != null) {
+      gl.disable(gl.CULL_FACE);
       gl.bindVertexArray(this.selectedVaoLoc);
       gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.selectedIndicesLoc);
 
-      gl.drawElements(gl.TRIANGLES, 3, gl.UNSIGNED_INT, 0); // Essa linha retorna erro
+      gl.drawElements(gl.TRIANGLES, 1, gl.UNSIGNED_INT, 0); // Essa linha retorna erro
     }
 
     gl.disable(gl.CULL_FACE);
