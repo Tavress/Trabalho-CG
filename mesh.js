@@ -5,7 +5,7 @@ import Shader from './shader.js';
 import { HalfEdgeDS } from './half-edge.js';
 
 export default class Mesh {
-  constructor(delta) {
+  constructor(delta, rotateAxis, size) {
     // model data structure
     this.heds = new HalfEdgeDS();
 
@@ -13,7 +13,6 @@ export default class Mesh {
     this.angle = 0;
     this.delta = delta;
     this.model = mat4.create();
-    this.rotationMatrix = mat4.create();
 
     // Shader program
     this.vertShd = null;
@@ -27,6 +26,9 @@ export default class Mesh {
     this.uModelLoc = -1;
     this.uViewLoc = -1;
     this.uProjectionLoc = -1;
+
+    this.rotateAxis = rotateAxis;
+    this.size = size;
   }
 
   async loadMeshV4() {
@@ -132,7 +134,9 @@ export default class Mesh {
     mat4.translate(this.model, this.model, [this.delta, 0, 0]);
     // [1 0 0 delta, 0 1 0 0, 0 0 1 0, 0 0 0 1] * this.mat 
 
-    //mat4.rotateY(this.model, this.model, this.angle);
+    mat4.rotate(this.model, this.model, this.angle, this.rotateAxis);
+    
+    //
     // [ cos(this.angle) 0 -sin(this.angle) 0, 
     //         0         1        0         0, 
     //   sin(this.angle) 0  cos(this.angle) 0, 
@@ -142,7 +146,7 @@ export default class Mesh {
     mat4.translate(this.model, this.model, [-0.25, -0.25, -0.25]);
     // [1 0 0 -0.5, 0 1 0 -0.5, 0 0 1 -0.5, 0 0 0 1] * this.mat 
 
-    mat4.scale(this.model, this.model, [0.3, 0.3, 0.3]);
+    mat4.scale(this.model, this.model, this.size);
     // [5 0 0 0, 0 5 0 0, 0 0 5 0, 0 0 0 1] * this.mat 
   }
 
@@ -166,7 +170,6 @@ export default class Mesh {
     gl.uniformMatrix4fv(this.uModelLoc, false, model);
     gl.uniformMatrix4fv(this.uViewLoc, false, view);
     gl.uniformMatrix4fv(this.uProjectionLoc, false, proj);
-
 
 
     gl.bindVertexArray(this.vaoLoc);

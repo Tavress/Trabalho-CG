@@ -11,8 +11,8 @@ class Scene {
     this.light = new Light();
 
     // Mesh
-    this.mesh = new Mesh(1.0);
-    this.copy = new Mesh(-1.0);
+    this.mesh = new Mesh(1.0, [0,1,0], [0.1, 0.1, 0.1]);
+    this.copy = new Mesh(0.0, [0,0,1], [0.3, 0.3, 0.3]);
   }
 
   async init(gl) {
