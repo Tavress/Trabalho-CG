@@ -1,12 +1,18 @@
-body { 
+body {
     background-color: rgb(255, 255, 255);
+    display: inline-block;
 }
 
 #glcanvas {
-    position: absolute;
+    display: block;
     left: 10px;
     top: 10px;
     width: 1024;
     height: 768;
     background-color: black;
+}
+
+#vertex {
+    display: inline-block;
+    width: 5em;
 }

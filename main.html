@@ -1,14 +1,35 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
-    <title>Primeiros Passos</title>
+    <title>TRABALHO 2</title>
     <link rel="stylesheet" href="main.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.6.1/gl-matrix-min.js"></script>
 </head>
 
 <body>
     <canvas id="glcanvas"></canvas>
+    <div>
+        <label for="vertex">Selecione o vértice desejado:</label>
+        <input type="number" id="vertex" name="vertex" min="0" value="0">
+        <fieldset>
+            <legend>Selecione o alvo:</legend>
+            <div>
+                <input type="radio" id="armadillo" name="mesh" value="armadillo" checked>
+                <label for="armadillo">Armadillo</label>
+            </div>
+
+            <div>
+                <input type="radio" id="bunny" name="mesh" value="bunny">
+                <label for="bunny">Bunny</label>
+            </div>
+            <div>
+                <button type="submit">Submit</button>
+            </div>
+
+        </fieldset>
+    </div>
 </body>
 
 <script src="shader.js" type="module"></script>
