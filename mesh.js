@@ -128,7 +128,7 @@ export default class Mesh {
   }
 
   updateModelMatrix() {
-    this.angle += 0.005;
+    this.angle += 0.05;
 
     mat4.identity(this.model);
     mat4.translate(this.model, this.model, [this.delta, 0, 0]);
