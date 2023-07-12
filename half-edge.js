@@ -37,7 +37,7 @@ export class HalfEdgeDS {
 
   build(coords, trigs) {
     // construção dos vértices
-    for (let vid = 0; vid < coords.length; vid+=4) {
+    for (let vid = 0; vid < coords.length; vid += 4) {
       const x = coords[vid];
       const y = coords[vid + 1];
       const z = coords[vid + 2];
@@ -47,10 +47,10 @@ export class HalfEdgeDS {
     }
 
     // construção das faces & half-edges
-    for (let tid = 0; tid < trigs.length; tid+=3) {
-      const v0  = this.vertices[ trigs[tid + 0] ];
-      const v1  = this.vertices[ trigs[tid + 1] ];
-      const v2  = this.vertices[ trigs[tid + 2] ];
+    for (let tid = 0; tid < trigs.length; tid += 3) {
+      const v0 = this.vertices[trigs[tid + 0]];
+      const v1 = this.vertices[trigs[tid + 1]];
+      const v2 = this.vertices[trigs[tid + 2]];
 
       const he0 = new HalfEdge(v0);
       const he1 = new HalfEdge(v1);
@@ -85,11 +85,11 @@ export class HalfEdgeDS {
     //console.log(this.halfEdges.length);
 
     //console.log(this.halfEdges[0].vertex.vid);
-    for (let hid = 0; hid < this.halfEdges.length; hid ++) {
+    for (let hid = 0; hid < this.halfEdges.length; hid++) {
       const a = this.halfEdges[hid].vertex.vid;
       const b = this.halfEdges[hid].next.vertex.vid;
 
-      const k = `k${Math.min(a,b)},${Math.max(a,b)}`;
+      const k = `k${Math.min(a, b)},${Math.max(a, b)}`;
 
       if (visited[k] !== undefined) {
         const op = visited[k];
@@ -105,20 +105,20 @@ export class HalfEdgeDS {
   }
 
   computeVertexHe() {
-    for (let hid = 0; hid < this.halfEdges.length; hid ++) {
+    for (let hid = 0; hid < this.halfEdges.length; hid++) {
       const v = this.halfEdges[hid].vertex;
 
       if (v.he === null) {
         v.he = this.halfEdges[hid];
       }
-      else if(this.halfEdges[hid].opposite === null) {
+      else if (this.halfEdges[hid].opposite === null) {
         v.he = this.halfEdges[hid];
       }
     }
   }
 
   computeNormals() {
-    for (let fId = 0; fId < this.faces.length; fId ++) {
+    for (let fId = 0; fId < this.faces.length; fId++) {
       const he0 = this.faces[fId].baseHe;
       const he1 = this.faces[fId].baseHe.next;
       const he2 = this.faces[fId].baseHe.next.next;
@@ -127,8 +127,8 @@ export class HalfEdgeDS {
       const v1 = he1.vertex.position;
       const v2 = he2.vertex.position;
 
-      const vec1 = [v1[0]-v0[0], v1[1]-v0[1], v1[2]-v0[2]]; // v1-v0
-      const vec2 = [v2[0]-v0[0], v2[1]-v0[1], v2[2]-v0[2]]; // v2-v0
+      const vec1 = [v1[0] - v0[0], v1[1] - v0[1], v1[2] - v0[2]]; // v1-v0
+      const vec2 = [v2[0] - v0[0], v2[1] - v0[1], v2[2] - v0[2]]; // v2-v0
 
       const n = [
         vec1[1] * vec2[2] - vec1[2] * vec2[1],
@@ -145,8 +145,8 @@ export class HalfEdgeDS {
   }
 
   getVBOs() {
-    const coords  = [];
-    const colors  = [];
+    const coords = [];
+    const colors = [];
     const normals = [];
     const indices = [];
 
@@ -168,4 +168,26 @@ export class HalfEdgeDS {
   estrela(v) {
 
   }
+
+  getVBO(index) {
+    const coords = [];
+    const colors = [];
+    const normals = [];
+    const indices = [];
+
+    const v = this.vertices[index];
+
+    coords.push(...v.position);
+    colors.push(...v.color);
+    normals.push(...v.normal);
+
+
+    indices.push(this.halfEdges[index].vertex.vid);
+    return [coords, colors, normals, indices];
+  }
+
+  estrela(v) {
+
+  }
+
 }

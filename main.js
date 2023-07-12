@@ -39,11 +39,6 @@ class Main {
 
   constructor() {
     const canvas = document.querySelector("#glcanvas");
-    const submitButton = document.getElementById("submit");
-
-    submitButton.onclick = () => {
-      console.log(this.getSelectedMesh(), this.getSelectedVertex());
-    }
 
     this.gl = canvas.getContext("webgl2");
     this.setViewport();
@@ -52,13 +47,29 @@ class Main {
     this.scene.init(this.gl).then(() => {
       this.draw();
     });
+
+    const submitButton = document.getElementById("submit");
+    submitButton.onclick = () => {
+      var selectedIndex = this.getSelectedVertex();
+      this.getSelectedMesh().createSelectedVAO(this.gl, selectedIndex);
+      console.log(this.getSelectedMesh(), this.getSelectedVertex());
+    }
   }
 
   getSelectedMesh() {
     var ele = document.getElementsByName('mesh');
 
     for (var i = 0; i < ele.length; i++) {
-      if (ele[i].checked) return ele[i].value;
+      if (ele[i].checked)
+        switch (ele[i].value) {
+          case "armadillo":
+            return this.scene.copy
+          case "bunny":
+            return this.scene.mesh;
+          case _:
+            console.warn("Unknown object");
+            return null;
+        };
     }
   }
 

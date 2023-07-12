@@ -29,6 +29,17 @@ export default class Mesh {
 
     this.rotateAxis = rotateAxis;
     this.size = size;
+
+    this.selectedVertex = null;
+    this.selectedVaoLoc = null;
+    this.selectedIndicesLoc = null;
+  }
+
+  findSelectedVertexHalfEdge(index) {
+    const ver = this.heds.vertices[index];
+    for (var i = 0; i < this.heds.halfEdges.length; i++)
+      if (ver == this.heds.halfEdges[i].vertex)
+        return this.heds.halfEdges[i];
   }
 
   async loadMeshV4() {
@@ -119,6 +130,27 @@ export default class Mesh {
     this.indicesLoc = Shader.createBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(vbos[3]));
   }
 
+  createSelectedVAO(gl, index) {
+    const vbos = this.heds.getVBO(index);
+
+    var coordsAttributeLocation = gl.getAttribLocation(this.program, "position");
+    const coordsBuffer = Shader.createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(vbos[0]));
+
+    var colorsAttributeLocation = gl.getAttribLocation(this.program, "color");
+    const colorsBuffer = Shader.createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(vbos[1]));
+
+    var normalsAttributeLocation = gl.getAttribLocation(this.program, "normal");
+    const normalsBuffer = Shader.createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(vbos[2]));
+
+    this.selectedVaoLoc = Shader.createVAO(gl,
+      coordsAttributeLocation, coordsBuffer,
+      colorsAttributeLocation, colorsBuffer,
+      normalsAttributeLocation, normalsBuffer);
+
+    this.selectedIndicesLoc = Shader.createBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(vbos[3]));
+  }
+
+
   init(gl, light) {
     this.createShader(gl);
     this.createUniforms(gl);
@@ -135,7 +167,7 @@ export default class Mesh {
     // [1 0 0 delta, 0 1 0 0, 0 0 1 0, 0 0 0 1] * this.mat 
 
     mat4.rotate(this.model, this.model, this.angle, this.rotateAxis);
-    
+
     //
     // [ cos(this.angle) 0 -sin(this.angle) 0, 
     //         0         1        0         0, 
@@ -176,6 +208,13 @@ export default class Mesh {
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indicesLoc);
 
     gl.drawElements(gl.TRIANGLES, this.heds.faces.length * 3, gl.UNSIGNED_INT, 0);
+
+    if (this.selectedVaoLoc != null) {
+      gl.bindVertexArray(this.selectedVaoLoc);
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.selectedIndicesLoc);
+
+      gl.drawElements(gl.TRIANGLES, 3, gl.UNSIGNED_INT, 0); // Essa linha retorna erro
+    }
 
     gl.disable(gl.CULL_FACE);
   }
