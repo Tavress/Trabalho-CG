@@ -55,7 +55,6 @@ class Main {
     submitButton.onclick = () => {
       var selectedIndex = Number(this.getSelectedVertex());
       this.getSelectedMesh().createSelectedVAO(this.gl, selectedIndex);
-      console.log(this.getSelectedMesh(), this.getSelectedVertex());
     }
 
     const rotateCheckBox = document.getElementById("rotation");

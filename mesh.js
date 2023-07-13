@@ -133,12 +133,13 @@ export default class Mesh {
 
   createSelectedVAO(gl, index) {
     const vbos = this.heds.getVBO(index);
+    console.log(vbos);
 
     var coordsAttributeLocation = gl.getAttribLocation(this.program, "position");
     const coordsBuffer = Shader.createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(vbos[0]));
 
     var colorsAttributeLocation = gl.getAttribLocation(this.program, "color");
-    const colorsBuffer = Shader.createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array([[1.0, 0.0, 0.0, 0.0]])); // Hardcoded
+    const colorsBuffer = Shader.createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array([1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0])); // Hardcoded
 
     var normalsAttributeLocation = gl.getAttribLocation(this.program, "normal");
     const normalsBuffer = Shader.createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(vbos[2]));
@@ -216,7 +217,7 @@ export default class Mesh {
       gl.bindVertexArray(this.selectedVaoLoc);
       gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.selectedIndicesLoc);
 
-      gl.drawArrays(gl.TRIANGLES, 1, gl.UNSIGNED_INT, 0); // Essa linha retorna erro
+      gl.drawElements(gl.TRIANGLES, 3, gl.UNSIGNED_INT, 0);
     }
 
     gl.disable(gl.CULL_FACE);

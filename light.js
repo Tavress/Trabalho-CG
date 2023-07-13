@@ -39,9 +39,7 @@ export default class Light {
     gl.uniform1f(espPLoc, this.esp_p);
   }
 
-  deg2rad(degrees) {
-    return degrees * (Math.PI / 180);
-  }
+  deg2rad = (degrees) => degrees * (Math.PI / 180);
 
   updateLight() {
     this.angle += 0.005 / 180;

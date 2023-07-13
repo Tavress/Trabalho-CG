@@ -175,14 +175,18 @@ export class HalfEdgeDS {
     const normals = [];
     const indices = [];
 
-    const v = this.vertices[index];
+    var current = this.vertices[index];
+    var currHE = current.he;
 
-    coords.push(...v.position);
-    colors.push(...v.color);
-    normals.push(...v.normal);
+    for (var i = 0; i < 3; i++) {
+      coords.push(...current.position);
+      colors.push(...current.color);
+      normals.push(...current.normal);
+      currHE = currHE.next;
+      current = currHE.vertex;
+      indices.push(current.vid);
+    }
 
-
-    indices.push(this.halfEdges[index].vertex.vid);
     return [coords, colors, normals, indices];
   }
 
