@@ -133,6 +133,12 @@ export default class Mesh {
 
   createSelectedVAO(gl, index) {
     const vbos = this.heds.getVBO(index);
+    const log = document.querySelector("#log");
+    const p = `Positions: ${vbos[0]}\n`;
+    const c = `Colors: ${vbos[1]}\n`;
+    const n = `Normals: ${vbos[2]}\n`;
+    const i = `Indices: ${vbos[3]}\n`;
+    log.innerHTML = p + c + n + i;
     console.log(vbos);
 
     var coordsAttributeLocation = gl.getAttribLocation(this.program, "position");

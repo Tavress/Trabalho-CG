@@ -6,13 +6,13 @@ export default class Light {
 
     this.pos = vec4.fromValues(1.0, 1.0, 1.0, 1.0);
 
-    this.amb_c = vec4.fromValues(1.0, 1.0, 0.0, 1.0);
-    this.amb_k = 0.2;
+    this.amb_c = vec4.fromValues(1.0, 1.0, 1.0, 1.0);
+    this.amb_k = 0.5;
 
-    this.dif_c = vec4.fromValues(1.0, 1.0, 1.0, 1.0);
+    this.dif_c = vec4.fromValues(1.0, 1.0, 0.0, 1.0);
     this.dif_k = 0.5;
 
-    this.esp_c = vec4.fromValues(1.0, 1.0, 1.0, 1.0);
+    this.esp_c = vec4.fromValues(1.0, 1.0, 0.0, 1.0);
     this.esp_k = 0.4;
     this.esp_p = 5.0;
   }

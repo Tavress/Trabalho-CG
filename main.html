@@ -16,20 +16,22 @@
         <label for="checkbox">Rodar objetos:</label>
         <input type="checkbox" id="rotation" name="rotation" checked>
         <fieldset>
-            <legend>Selecione o alvo:</legend>
-            <div>
-                <input type="radio" id="armadillo" name="mesh" value="armadillo" checked>
-                <label for="armadillo">Armadillo</label>
-            </div>
+            <div class="form">
+                <legend>Selecione o alvo:</legend>
+                <div>
+                    <input type="radio" id="armadillo" name="mesh" value="armadillo" checked>
+                    <label for="armadillo">Armadillo</label>
+                </div>
 
-            <div>
-                <input type="radio" id="bunny" name="mesh" value="bunny">
-                <label for="bunny">Bunny</label>
+                <div>
+                    <input type="radio" id="bunny" name="mesh" value="bunny">
+                    <label for="bunny">Bunny</label>
+                </div>
+                <div id="submit_div">
+                    <button type="submit" id="submit">Submit</button>
+                </div>
             </div>
-            <div>
-                <button type="submit" id="submit">Submit</button>
-            </div>
-
+            <pre id="log"></pre>
         </fieldset>
     </div>
 </body>
