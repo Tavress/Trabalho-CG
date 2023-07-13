@@ -1,8 +1,12 @@
 export default class Light {
   constructor() {
-    this.pos = vec4.fromValues(2.0, 2.0, 2.0, 1.0);
+    this.angle = 0;
+    this.up = vec4.fromValues(0.0, 1.0, 0.0, 1.0);
+    this.rotMat = mat4.create();
 
-    this.amb_c = vec4.fromValues(1.0, 1.0, 1.0, 1.0);
+    this.pos = vec4.fromValues(1.0, 1.0, 1.0, 1.0);
+
+    this.amb_c = vec4.fromValues(1.0, 1.0, 0.0, 1.0);
     this.amb_k = 0.2;
 
     this.dif_c = vec4.fromValues(1.0, 1.0, 1.0, 1.0);
@@ -13,7 +17,7 @@ export default class Light {
     this.esp_p = 5.0;
   }
 
-  createUniforms(gl, program){
+  createUniforms(gl, program) {
     const posLoc = gl.getUniformLocation(program, "light_pos");
     gl.uniform4fv(posLoc, this.pos);
 
@@ -35,8 +39,22 @@ export default class Light {
     gl.uniform1f(espPLoc, this.esp_p);
   }
 
+  deg2rad(degrees) {
+    return degrees * (Math.PI / 180);
+  }
+
   updateLight() {
-    // TODO: Change light position
-    //mat4.translate(this.pos, )
+    this.angle += 0.005 / 180;
+    mat4.identity(this.rotMat);
+    const m = mat4.fromRotation(this.rotMat, this.deg2rad(this.angle), this.up);
+    vec4.transformMat4(this.pos, this.pos, m);
+  }
+
+  updateLightEffects(gl, program) {
+    const posLoc = gl.getUniformLocation(program, "light_pos");
+    gl.uniform4fv(posLoc, this.pos);
+
+    const espCLoc = gl.getUniformLocation(program, "light_esp_c");
+    gl.uniform4fv(espCLoc, this.pos);
   }
 }

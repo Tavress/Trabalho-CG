@@ -3,6 +3,7 @@ import fragShaderSrc from './phong.frag.js';
 
 import Shader from './shader.js';
 import { HalfEdgeDS } from './half-edge.js';
+import Scene from './main.js'
 
 export default class Mesh {
   constructor(delta, rotateAxis, size) {
@@ -166,7 +167,8 @@ export default class Mesh {
     mat4.translate(this.model, this.model, [this.delta, 0, 0]);
     // [1 0 0 delta, 0 1 0 0, 0 0 1 0, 0 0 0 1] * this.mat 
 
-    mat4.rotate(this.model, this.model, this.angle, this.rotateAxis);
+    if (Scene.rotateObjs) mat4.rotate(this.model, this.model, this.angle, this.rotateAxis);
+
 
     //
     // [ cos(this.angle) 0 -sin(this.angle) 0, 
@@ -214,7 +216,7 @@ export default class Mesh {
       gl.bindVertexArray(this.selectedVaoLoc);
       gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.selectedIndicesLoc);
 
-      gl.drawElements(gl.TRIANGLES, 1, gl.UNSIGNED_INT, 0); // Essa linha retorna erro
+      gl.drawArrays(gl.TRIANGLES, 1, gl.UNSIGNED_INT, 0); // Essa linha retorna erro
     }
 
     gl.disable(gl.CULL_FACE);

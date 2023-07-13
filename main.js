@@ -2,7 +2,8 @@ import Camera from './camera.js';
 import Light from './light.js';
 import Mesh from './mesh.js';
 
-class Scene {
+export default class Scene {
+  static rotateObjs = true;
   constructor(gl) {
     // Camera virtual
     this.cam = new Camera(gl);
@@ -29,7 +30,9 @@ class Scene {
     this.light.updateLight();
 
     this.mesh.draw(gl, this.cam, this.light);
+    this.light.updateLightEffects(gl, this.mesh.program);
     this.copy.draw(gl, this.cam, this.light);
+    this.light.updateLightEffects(gl, this.copy.program);
   }
 }
 
@@ -54,6 +57,9 @@ class Main {
       this.getSelectedMesh().createSelectedVAO(this.gl, selectedIndex);
       console.log(this.getSelectedMesh(), this.getSelectedVertex());
     }
+
+    const rotateCheckBox = document.getElementById("rotation");
+    rotateCheckBox.onchange = () => Scene.rotateObjs = rotateCheckBox.checked;
   }
 
   getSelectedMesh() {
