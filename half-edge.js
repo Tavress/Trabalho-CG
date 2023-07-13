@@ -178,13 +178,14 @@ export class HalfEdgeDS {
     var current = this.vertices[index];
     var currHE = current.he;
 
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; !indices.includes(current.vid); i++) {
       coords.push(...current.position);
       colors.push(...current.color);
       normals.push(...current.normal);
+      indices.push(current.vid);
+
       currHE = currHE.next;
       current = currHE.vertex;
-      indices.push(current.vid);
     }
 
     return [coords, colors, normals, indices];
