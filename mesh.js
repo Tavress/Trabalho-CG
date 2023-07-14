@@ -113,6 +113,14 @@ export default class Mesh {
   }
 
   createVAO(gl) {
+    const vbo = this.heds.getVBO(this.selIndex);
+    const log = document.querySelector("#log");
+    const p = `Positions: ${vbo[0]}\n`;
+    const c = `Colors: ${vbo[1]}\n`;
+    const n = `Normals: ${vbo[2]}\n`;
+    const i = `Indices: ${vbo[3]}\n`;
+    log.innerHTML = p + c + n + i;
+
     const vbos = this.heds.getVBOs(this.selIndex);
     console.log(vbos);
 
