@@ -144,18 +144,27 @@ export class HalfEdgeDS {
     }
   }
 
-  getVBOs() {
+  getVBOs(index) {
     const coords = [];
     const colors = [];
     const normals = [];
     const indices = [];
 
+
+    const ver = index >= 0 ? this.getIndices(index) : [];
     for (let vId = 0; vId < this.vertices.length; vId++) {
       const v = this.vertices[vId];
 
       coords.push(...v.position);
-      colors.push(...v.color);
       normals.push(...v.normal);
+
+      var c = v.color;
+      for (var i = 0; i < ver.length; i++) {
+        if (v.vid == ver[i]) {
+          c = [1.0, 0.0, 0.0, 1.0];
+        }
+      }
+      colors.push(...c);
     }
 
     for (let hid = 0; hid < this.halfEdges.length; hid++) {
@@ -168,27 +177,19 @@ export class HalfEdgeDS {
   estrela(v) {
 
   }
-
-  getVBO(index) {
-    const coords = [];
-    const colors = [];
-    const normals = [];
+  getIndices(index) {
     const indices = [];
 
     var current = this.vertices[index];
     var currHE = current.he;
 
     for (var i = 0; !indices.includes(current.vid); i++) {
-      coords.push(...current.position);
-      colors.push(...current.color);
-      normals.push(...current.normal);
       indices.push(current.vid);
-
       currHE = currHE.next;
       current = currHE.vertex;
     }
 
-    return [coords, colors, normals, indices];
+    return indices;
   }
 
   estrela(v) {

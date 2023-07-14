@@ -113,30 +113,11 @@ export default class Mesh {
   }
 
   createVAO(gl) {
-    const vbos = this.heds.getVBOs();
+    const vbos = this.heds.getVBOs(this.selIndex);
     console.log(vbos);
 
     var coordsAttributeLocation = gl.getAttribLocation(this.program, "position");
     const coordsBuffer = Shader.createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(vbos[0]));
-
-    if (this.selIndex >= 0) {
-      const sel = this.getIndexArray();
-      var found = [];
-      for (var i = 0; i < vbos[1].length; i++) {
-        for (var j = 0; j < sel.length; j++) {
-          if (vbos[3][i] == sel[j] && !found.includes(sel[j])) {
-            found.push(sel[j]);
-            vbos[1][i] = 1.0;
-            vbos[1][i + 1] = 0.0;
-            vbos[1][i + 2] = 0.0;
-            vbos[1][i + 3] = 1.0;
-            console.log(sel[j]);
-            console.log(`${vbos[1][i]}${vbos[1][i + 1]}${vbos[1][i + 2]}${vbos[1][i + 3]}`);
-          }
-        }
-      }
-    }
-    console.log(vbos[1]);
 
     var colorsAttributeLocation = gl.getAttribLocation(this.program, "color");
     const colorsBuffer = Shader.createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(vbos[1]));
