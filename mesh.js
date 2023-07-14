@@ -34,6 +34,8 @@ export default class Mesh {
     this.selectedVertex = null;
     this.selectedVaoLoc = null;
     this.selectedIndicesLoc = null;
+
+    this.selIndex = -1;
   }
 
   findSelectedVertexHalfEdge(index) {
@@ -117,6 +119,17 @@ export default class Mesh {
     var coordsAttributeLocation = gl.getAttribLocation(this.program, "position");
     const coordsBuffer = Shader.createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(vbos[0]));
 
+    if (this.selIndex >= 0) {
+      for (var i = 0; i < vbos[1].length; i++) {
+        const sel = this.getIndexArray();
+        for (var j = 0; j < sel.length; j++) {
+          if (vbos[3].includes(sel[j])) {
+            vbos[1][i] = [1.0, 0.0, 0.0, 1.0];
+          }
+        }
+      }
+    }
+
     var colorsAttributeLocation = gl.getAttribLocation(this.program, "color");
     const colorsBuffer = Shader.createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(vbos[1]));
 
@@ -129,6 +142,14 @@ export default class Mesh {
       normalsAttributeLocation, normalsBuffer);
 
     this.indicesLoc = Shader.createBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(vbos[3]));
+  }
+
+  setSelectedIndex(index) {
+    this.selIndex = index;
+  }
+
+  getIndexArray() {
+    return this.heds.getVBO(this.selIndex)[3];
   }
 
   createSelectedVAO(gl, index) {
@@ -217,14 +238,6 @@ export default class Mesh {
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indicesLoc);
 
     gl.drawElements(gl.TRIANGLES, this.heds.faces.length * 3, gl.UNSIGNED_INT, 0);
-
-    if (this.selectedVaoLoc != null) {
-      gl.disable(gl.CULL_FACE);
-      gl.bindVertexArray(this.selectedVaoLoc);
-      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.selectedIndicesLoc);
-
-      gl.drawElements(gl.TRIANGLES, 3, gl.UNSIGNED_INT, 0);
-    }
 
     gl.disable(gl.CULL_FACE);
   }
