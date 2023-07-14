@@ -124,11 +124,15 @@ export default class Mesh {
         const sel = this.getIndexArray();
         for (var j = 0; j < sel.length; j++) {
           if (vbos[3].includes(sel[j])) {
-            vbos[1][i] = [1.0, 0.0, 0.0, 1.0];
+            vbos[1][i] = 1.0;
+            vbos[1][i + 1] = 0.0;
+            vbos[1][i + 2] = 0.0;
+            vbos[1][i + 3] = 1.0;
           }
         }
       }
     }
+    console.log(vbos[1]);
 
     var colorsAttributeLocation = gl.getAttribLocation(this.program, "color");
     const colorsBuffer = Shader.createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(vbos[1]));
